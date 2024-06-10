@@ -7,6 +7,7 @@ Requirements
 ------------
 
 - A system managed by systemd.
+- This role requires elevated system privilege.
 
 Role Variables
 --------------
@@ -29,7 +30,8 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - karthicraghupathi.k3s
+         - role: karthicraghupathi.k3s
+           become: true
 
 License
 -------
