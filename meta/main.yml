@@ -1,0 +1,16 @@
+galaxy_info:
+  role_name: k3s
+  description: Ansible role to install K3s in a linux distribution.
+  author: Karthic Raghupathi
+  namespace: karthicraghupathi
+  license: MIT
+  min_ansible_version: "2.1"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - noble
+        - jammy
+        - focal
+  galaxy_tags:
+    - k3s
+    - kubernetes

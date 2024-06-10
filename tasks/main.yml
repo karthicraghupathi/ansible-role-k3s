@@ -1,0 +1,32 @@
+---
+- name: Check if k3s is installed
+  ansible.builtin.command: k3s --version
+  register: output_k3s_version
+  changed_when: false
+  ignore_errors: true
+
+- name: Download k3s install script
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/install-k3s.sh
+    mode: '0755'
+  when: output_k3s_version.rc != 0
+
+- name: Run k3s install script
+  ansible.builtin.command:
+    cmd: /tmp/install-k3s.sh
+    creates: /usr/local/bin/k3s
+  when: output_k3s_version.rc != 0
+
+- name: Ensure the k3s config directory is present
+  ansible.builtin.file:
+    path: "{{ k3s_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy k3s configuration
+  ansible.builtin.copy:
+    src: files/00-kubeconfig-mode.yaml
+    dest: "{{ k3s_config_dir }}/00-kubeconfig-mode.yaml"
+    mode: '0644'
+  notify: Restart k3s
