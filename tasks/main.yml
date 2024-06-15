@@ -12,6 +12,11 @@
     mode: '0755'
   when: output_k3s_version.rc != 0
 
+- name: Ensure curl is present
+  ansible.builtin.package:
+    name: curl
+    state: present
+
 - name: Run k3s install script
   ansible.builtin.command:
     cmd: /tmp/install-k3s.sh
