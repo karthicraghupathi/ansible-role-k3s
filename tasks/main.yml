@@ -35,3 +35,6 @@
     dest: "{{ k3s_config_dir }}/00-kubeconfig-mode.yaml"
     mode: '0644'
   notify: Restart k3s
+
+- name: Flush handles at the end of the role
+  ansible.builtin.meta: flush_handlers
